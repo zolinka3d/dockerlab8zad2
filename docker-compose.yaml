@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - 6379:6379
+    command: redis-server
+  api:
+    build: app
+    container_name: lab8zad2
+    ports:
+      - 3000:3000
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PORT=3000
+    depends_on:
+      - redis
+    command: node main.js
+
